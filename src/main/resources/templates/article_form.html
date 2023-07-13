@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <!-- sbb CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <title>TEST</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">TEST</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/signup}">회원가입</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<th:block layout:fragment="content"></th:block>
+<!-- 기본 템플릿 안에 삽입될 내용 End -->
+</body>
+</html>
+
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form th:action="@{/article/create}" th:object="${articleForm}" method="post">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" th:field="*{title}" name="title" id="title" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea th:field="*{content}" name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="등록" class="btn btn-primary my-2">
+    </form>
+</div>
+
+
