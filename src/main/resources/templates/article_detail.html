@@ -39,7 +39,17 @@
 
 <h3 th:text="${article.title}"></h3>
 <p th:text="${article.content}"></p>
-<a th:href="@{|/article/modify/${article.id}|}" th:text="수정"></a>
-<a th:href="@{|/article/delete/${article.id}|}" th:text="삭제"></a>
+
+
+
+<a th:href="@{/article/modify}" class="btn btn-sm btn-outline-secondary"
+   sec:authorize="isAuthenticated()"
+   th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+   th:text="수정"></a>
+<a href="javascript:void(0);" th:data-uri="@{|/article/delete/${article.id}|}"
+   class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+   th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+   th:text="삭제"></a>
+
 <a th:href="@{/article/list}">목록</a>
 
